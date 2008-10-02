@@ -29,6 +29,7 @@ module Technoweenie # :nodoc:
           return unless process_attachment_without_processing
           with_image do |img|
             resize_image_or_thumbnail! img
+            set_color_depth! img
             self.width  = img[:width] if respond_to?(:width)
             self.height = img[:height]  if respond_to?(:height)
             callback_with_args :after_resize, img
@@ -53,6 +54,11 @@ module Technoweenie # :nodoc:
           end
           self.temp_path = img
         end
+        
+        def set_color_depth(img, depth)
+          logger.info "Setting color depth not supported under mini_magick"
+        end
+        
       end
     end
   end

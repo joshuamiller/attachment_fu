@@ -459,6 +459,13 @@ module Technoweenie # :nodoc:
           end
         end
 
+        # Sets the color depth of a processed img object with the color depth option
+        def set_color_depth!(img)
+          if depth = attachment_options[:color_depth]
+            set_color_depth(img, depth)
+          end
+        end
+
         # Yanked from ActiveRecord::Callbacks, modified so I can pass args to the callbacks besides self.
         # Only accept blocks, however
         if ActiveSupport.const_defined?(:Callbacks)

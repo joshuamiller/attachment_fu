@@ -22,6 +22,7 @@ module Technoweenie # :nodoc:
             return unless process_attachment_without_processing && image?
             with_image do |img|
               resize_image_or_thumbnail! img
+              set_color_depth! img
               self.width  = img.width
               self.height = img.height
               callback_with_args :after_resize, img
@@ -46,6 +47,11 @@ module Technoweenie # :nodoc:
             end
             self.temp_path = random_tempfile_filename
             self.size = img.export(self.temp_path)
+          end
+          
+          # Unsupported
+          def set_color_depth(img, depth)
+            logger.info "Setting color depth not supported under GD2 processor"
           end
 
       end

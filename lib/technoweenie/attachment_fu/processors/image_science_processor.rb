@@ -22,6 +22,7 @@ module Technoweenie # :nodoc:
               self.width  = img.width  if respond_to?(:width)
               self.height = img.height if respond_to?(:height)
               resize_image_or_thumbnail! img
+              set_color_depth! img
             end
           end
 
@@ -54,6 +55,11 @@ module Technoweenie # :nodoc:
               new_size = [img.width, img.height] / size.to_s
               img.resize(new_size[0], new_size[1], &grab_dimensions)
             end
+          end
+          
+          # Unsupported
+          def set_color_depth(img, depth)
+            logger.info "Setting color depth unsupported under Image Science processor"
           end
       end
     end

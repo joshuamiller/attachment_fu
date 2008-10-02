@@ -22,6 +22,7 @@ module Technoweenie # :nodoc:
               self.width  = img.extent.size.width  if respond_to?(:width)
               self.height = img.extent.size.height if respond_to?(:height)
               resize_image_or_thumbnail! img
+              set_color_depth! img
               callback_with_args :after_resize, img
             end if image?
           end
@@ -44,13 +45,15 @@ module Technoweenie # :nodoc:
             processor.render do |result|
               self.width  = result.extent.size.width  if respond_to?(:width)
               self.height = result.extent.size.height if respond_to?(:height)
-              
-              # Get a new temp_path for the image before saving
-              self.temp_path = Tempfile.new(random_tempfile_filename, Technoweenie::AttachmentFu.tempfile_path).path
               result.save self.temp_path, OSX::NSJPEGFileType
               self.size = File.size(self.temp_path)
             end
-          end          
+          end
+          
+          def set_color_depth(img, depth)
+            logger.info "Setting color depth under Core Image not supported"
+          end
+                      
       end
     end
   end

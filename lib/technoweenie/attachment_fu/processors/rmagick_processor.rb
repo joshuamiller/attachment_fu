@@ -30,6 +30,7 @@ module Technoweenie # :nodoc:
           return unless process_attachment_without_processing
           with_image do |img|
             resize_image_or_thumbnail! img
+            set_color_depth! img
             self.width  = img.columns if respond_to?(:width)
             self.height = img.rows    if respond_to?(:height)
             callback_with_args :after_resize, img
@@ -48,6 +49,13 @@ module Technoweenie # :nodoc:
           img.strip! unless attachment_options[:keep_profile]
           self.temp_path = write_to_temp_file(img.to_blob)
         end
+        
+        def set_color_depth(img, depth)
+          unless img.depth == depth
+            img.write(self.temp_path) { self.depth = depth }
+          end
+        end
+        
       end
     end
   end
